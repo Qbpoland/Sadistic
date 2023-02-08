@@ -15,24 +15,29 @@
       <input type="submit" value="Wyślij plik" name="submit">
 </form>
 <?php
+    if(isset($_POST['submit'])) {
+        $imageInfo = getimagesize($_FILES["uploadFile"]["tmp_name"]);
+        if (!is_array($imageInfo)) {
+            die("BŁĄD: Nieprawidłowy format obrazu");
+        }
 
-if(isset($_POST['submit'])) {
-    $filename = $_FILES['uploadFile']['name'];
-    $targetDir = "img/";
-    $targetExtension = pathinfo($filename, PATHINFO_EXTENSION);
-    $targetExtension = strtolower($targetExtension);
+        $filename = $_FILES['uploadFile']['name'];
+        $targetDir = "img/";
+        $targetExtension = pathinfo($filename, PATHINFO_EXTENSION);
+        $targetExtension = strtolower($targetExtension);
 
 
-    $targetFile = $filename . hrtime(true);
-    $targetFile = hash("sha256", $targetFile) . $targetExtension;
+        $targetFile = $filename . hrtime(true);
+        $targetFile = hash("sha256", $targetFile) . $targetExtension;
 
-    $targetUrl = $targetDir . $targetFile . "." . $targetExtension;
+        $targetUrl = $targetDir . $targetFile . "." . $targetExtension;
 
-    if(file_exists($targetUrl)) {
-        die("BŁĄD: Plik o tej nazwie już istnieje");
+        if(file_exists($targetUrl)) {
+            die("BŁĄD: Plik o tej nazwie już istnieje");
+        }
+        move_uploaded_file($_FILES["uploadFile"]["tmp_name"], $targetUrl);
     }
-    move_uploaded_file($_FILES["uploadFile"]["tmp_name"], $targetUrl);
-}
+
 
 ?>
 </body>
