@@ -7,10 +7,16 @@
     <title>Document</title>
     <link rel="stylesheet" href="style_main.css">
 </head>
-<html>
 <body>
-	<h1 id="Logo">Photos</h1>
-
+<div id="Navtool">
+		<div id="navbar">
+			<a href="#" class="navlink">Home</a>
+			<a href="#" class="navlink">Contact</a>
+			<a href="#" class="navlink">About Us</a>
+			<a href="#" class="navlink">FAQ</a>
+		</div>
+	</div>
+	</div>
 	<?php
 		// Connect to the database
 		$db = new mysqli('localhost', 'root', '', 'cms_js');
@@ -23,8 +29,19 @@
 		while ($row = $result->fetch_assoc()) {
 			$filename = $row['filename'];
 			$url = "img/" . $filename;
-			echo "<img src='$url' alt='$filename'>";
+			echo "<div class='photo'>
+				  <img src='$url' alt='$filename'>
+				  <div class='comments'>
+				    <h2>Comments</h2>
+				    <ul>
+				      <li>Comment 1</li>
+				      <li>Comment 2</li>
+				      <li>Comment 3</li>
+				    </ul>
+				  </div>
+			    </div>";
 		}
 	?>
+
 </body>
 </html>
