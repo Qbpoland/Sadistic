@@ -29,8 +29,10 @@
 		while ($row = $result->fetch_assoc()) {
 			$filename = $row['filename'];
 			$url = "img/" . $filename;
+			$date = date('F j, Y', strtotime($row['timestamp']));
 			echo "<div class='photo'>
 				  <img src='$url' alt='$filename'>
+				  <div class='date'>$date</div>
 				  <div class='comments'>
 				    <h2>Comments</h2>
 				    <ul>
@@ -38,7 +40,14 @@
 				      <li>Comment 2</li>
 				      <li>Comment 3</li>
 				    </ul>
+					<div class='vote'>
+                    <button class='upvote' type='button'>▲</button>
+                    <div class='votecounter'>69</div>
+                    <button class='downvote' type='button'>▼</button>
+                    
+                </div>
 				  </div>
+				  <input type='button' value='Pokaż więcej'> 
 			    </div>";
 		}
 	?>
