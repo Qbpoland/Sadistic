@@ -1,61 +1,79 @@
 .photo {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 20px 0;
-  }
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 20px 0;
   
-  .comments {
-    margin-top: 20px;
-    border: 1px solid #ccc;
-    padding: 10px;
-    width: 80%;
-    max-width: 500px;
-  }
-  
-  .comments h2 {
-    margin: 0;
-  }
-  
-  .comments ul {
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .comments li {
-    margin-bottom: 10px;
-  }
+}
+
+.date {
+  margin-top: 10px;
+  font-size: 14px;
+  font-style: italic;
+}
+
+.comments {
+  margin-top: 20px;
+  border: 1px solid #ccc;
+  padding: 10px;
+  width: 80%;
+  max-width: 500px;
+}
+
+.comments h2 {
+  margin: 0;
+}
+
+.comments ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.comments li {
+  margin-bottom: 10px;
+}
+
 body {
-    background-color: #222;
-    color: #fff;
-    margin-top: 0;
-    margin-left: 0;
-    margin-right: 0;
-    
+  background-color: #222;
+  color: #fff;
+  margin-top: 0;
+  margin-left: 0;
+  margin-right: 0;
 }
+
 #Navtool {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: flex-end;
-    background-color: #333;
-    padding: 10px;
-    position: sticky;
-    top: 0;
-    z-index: 1;
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+  background-color: #333;
+  padding: 10px;
+  position: sticky;
+  top: 0;
+  z-index: 1;
 }
+
 #navbar {
-    display: flex;
-    flex-direction: row;
+  display: flex;
+  flex-direction: row;
 }
 
 #navbar a {
-    color: white;
-    margin-right: 20px;
-    text-decoration: none;
+  color: white;
+  margin-right: 20px;
+  text-decoration: none;
 }
 
 #navbar a:hover {
-    color: #ddd;
+  color: #ddd;
+}
+
+.photo img {
+  border: 1px solid #ccc;
+}
+.vote {
+  float: right;
+  margin-left: 1em;
+  
 }
