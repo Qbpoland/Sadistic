@@ -26,3 +26,6 @@ if(isset($_POST['submit'])) {
     </form>
 </body>
 </html>
+<?php 
+var_dump(Post::getPage());
+?>
