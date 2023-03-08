@@ -64,11 +64,26 @@
         $query->bind_param("sss", $dbTimestamp, $targetFileName, $title);
         if (!$query->execute())
         die("błąd zapisu do bazy danych");
-
-
-
- 
- 
- 
     }
+        static function getLast() : Post {
+            //odwołuję się do bazy danych
+            global $db;
+            //Przygotuj kwerendę do bazy danych
+            $query = $db->prepare("SELECT * FROM post ORDER BY timestamp DESC LIMIT 1");
+            //wykonaj kwerendę
+            $query->execute();
+            //pobierz wynik
+            $result = $query->get_result();
+            //przetwarzanie na tablicę asocjacyjną - bez pętli bo będzie tylko jeden
+            $row = $result->fetch_assoc();
+            //tworzenie obiektu
+            $p = new Post($row['id'], $row['filename'], $row['timestamp']);
+            //zwracanie obiektu
+            return $p; 
+        }
+
+ 
+ 
+ 
+    
 }

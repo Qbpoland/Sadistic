@@ -28,7 +28,7 @@
 		// Loop through the list of photos and display them
 		while ($row = $result->fetch_assoc()) {
 			$filename = $row['filename'];
-			$url = "img/" . $filename;
+			$url = "pub/img/" . $filename;
 			$date = date('F j, Y', strtotime($row['timestamp']));
 			echo "<div class='photo'>
 				  <img src='$url' alt='$filename'>
