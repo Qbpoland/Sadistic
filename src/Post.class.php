@@ -10,6 +10,13 @@
     $this->imageUrl = $imageUrl;
     $this->timeStamp = $timeStamp;
     }
+
+    public function imageUrl() : string {
+        return $this->imageUrl;
+    }
+    public function title() : string {
+        return $this->title;
+    }
     
     static function get(int $id) : Post {
      global $db;

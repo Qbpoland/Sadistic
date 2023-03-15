@@ -1,3 +1,46 @@
-{% include 'header.html.twig' %}
-<h1>Strona główna</h1>
-{%include 'footer.html.twig' %}
+{%include 'header.html.twig'%}
+<h1>Posty</h1>
+<div id="Navtool">
+    <div id="navbar">
+        <a href="#" class="navlink">Home</a>
+        <a href="#" class="navlink">Contact</a>
+        <a href="#" class="navlink">About Us</a>
+        <a href="#" class="navlink">FAQ</a>
+    </div>
+    <br>
+    <br>
+    
+<a href="upload">Wgraj mema</a>
+<br><br>
+{% for post in posts %}
+
+<div class='post'>
+    <button type='button' class='comment'>
+        💬
+    </button> 
+    <div class='title'>
+        <h2>{{ post.title() }}</h2>
+        {{ post.getTimestamp() }}<br>
+    </div>
+<img class='img' src="{{ post.imageUrl() }}"><br></div>
+<div class='comments'>
+    <h2>Comments</h2>
+    <ul>
+      <li>Comment 1</li>
+      <li>Comment 2</li>
+      <li>Comment 3</li>
+    </ul>
+    <div class='vote'>
+    <button class='upvote' type='button'>▲</button>
+    <div class='votecounter'>69</div>
+    <button class='downvote' type='button'>▼</button>
+    
+</div>
+  </div>
+  <input type='button' value='Pokaż więcej'> 
+</div>";
+    
+
+{% endfor %}
+
+{%include 'footer.html.twig'%}
