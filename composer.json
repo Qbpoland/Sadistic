@@ -1,5 +1,18 @@
 {
-    "name": "1074701/sadistic",
+    "name": "machinacyfrowa/cms",
+    "description": "Prosty system CMS do strony z memami",
+    "type": "project",
+    "autoload": {
+        "psr-4": {
+            "Machinacyfrowa\\Cms\\": "src/"
+        }
+    },
+    "authors": [
+        {
+            "name": "Jakub Stasiuk",
+            "email": "admin@gmail.com"
+        }
+    ],
     "require": {
         "steampixel/simple-php-router": "^0.7.1",
         "twig/twig": "^3.5"

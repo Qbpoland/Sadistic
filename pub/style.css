@@ -1,0 +1,233 @@
+* {
+    margin: 0;
+    padding: 0;
+  }
+  
+  #Navtool {
+    background-color: #1877f2;
+    color: white;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+  }
+  
+  #navbar {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .navlink {
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+    text-decoration: none;
+  }
+  
+  .navlink:hover {
+    text-decoration: underline;
+  }
+  
+  #loggedUser {
+    font-size: 18px;
+    font-weight: bold;
+  }
+  
+  #loggedUser a {
+    background-color: white;
+    color: #1877f2;
+    font-size: 16px;
+    font-weight: bold;
+    text-decoration: none;
+    padding: 5px 10px;
+    border-radius: 5px;
+    margin-left: 20px;
+  }
+  
+  #loggedUser a:hover {
+    background-color: #f0f2f5;
+  }
+  
+  #pageContainer {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+  #post {
+    margin-bottom: 20px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 20px;
+  }
+  
+  #post h2 {
+    font-size: 24px;
+    font-weight: bold;
+    margin-bottom: 10px;
+  }
+  
+  #post img {
+    max-width: 100%;
+    margin-bottom: 10px;
+  }
+  
+  #post h6 {
+    font-size: 14px;
+    margin-bottom: 5px;
+  }
+
+.upvote,
+.downvote {
+    background-color: transparent;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+<<<<<<< HEAD
+}
+
+.votecounter {
+    font-size: 18px;
+    margin: 0 10px;
+}
+<<<<<<< HEAD
+
+.upvote:hover,
+.downvote:hover {
+    color: #1877f2;
+}
+#pageContainer {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  input[type="email"],
+  input[type="password"] {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+  
+  input[type="submit"] {
+    background-color: #1877f2;
+    color: #fff;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #1464a3;
+  }
+  
+  .message {
+    font-size: 18px;
+    color: #1877f2;
+    margin-top: 20px;
+  }
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+=======
+img.thumbnail {
+    max-width: 300px;
+}
+
+>>>>>>> a0c729e (votes and working site)
+=======
+}
+
+.votecounter {
+    font-size: 18px;
+    margin: 0 10px;
+}
+
+.upvote:hover,
+.downvote:hover {
+    color: #1877f2;
+}
+#pageContainer {
+    max-width: 600px;
+    margin: auto;
+    padding: 20px;
+  }
+  
+  h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 20px;
+  }
+  
+  form {
+    margin-top: 30px;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  label {
+    font-size: 18px;
+    margin-bottom: 10px;
+  }
+  
+  input[type="email"],
+  input[type="password"] {
+    padding: 10px;
+    font-size: 16px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+  
+  input[type="submit"] {
+    background-color: #1877f2;
+    color: #fff;
+    padding: 10px;
+    font-size: 18px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  
+  input[type="submit"]:hover {
+    background-color: #1464a3;
+  }
+  
+  .message {
+    font-size: 18px;
+    color: #1877f2;
+    margin-top: 20px;
+  }
+  body {
+    font-family: 'Open Sans', sans-serif;
+  }
+  
+>>>>>>> c5eadd0 (fb-style css)

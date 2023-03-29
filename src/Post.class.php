@@ -1,96 +1,138 @@
 <?php
- class post {
+class Post {
+    private int $id;
     private string $title;
-    private string $imageUrl;
-    private string $timeStamp;
+    private string $filename;
+    private string $timestamp;
+    //id użytkownika który wgrał mema
+    private int $authorId;
+    //nazwa użytkownika autora mema
+    private string $authorName;
     
 
-    function __construct(string $title, string $imageUrl, string $timeStamp) {
-    $this->title = $title;
-    $this->imageUrl = $imageUrl;
-    $this->timeStamp = $timeStamp;
+    function __construct(int $i, string $f, string $t, string $title, int $authorId) {
+        $this->id = $i;
+        $this->filename = $f;
+        $this->timestamp = $t;
+        $this->title = $title;
+        $this->authorId = $authorId;
+        //pobierz z bazy danych imię / login autora posta
+        global $db;
+        $this->authorName = User::getNameById($this->authorId);
     }
-
-    public function imageUrl() : string {
-        return $this->imageUrl;
-    }
-    public function title() : string {
+    //gettery 
+    public function getTitle() : string {
         return $this->title;
     }
-    
-    static function get(int $id) : Post {
-     global $db;
-     $query = $db->prepare("SELECT * FROM post WHERE id = ?");
-     $query->bind_param('i', $id);
-     $query->execute();
-     $result = $query->get_result();
-     $resultArray = $result->fetch_assoc();
-     return new Post($resultArray['title'],
-                    $result['filename'],
-                    $result['timestamp']);
+    public function getFilename() : string {
+        return $this->filename;
     }
-    static function getPage(int $pageNumber = 1, int $postPerPage = 10){
-        global $db; 
-        $query = $db->prepare("SELECT * From post Limit ? OFFSET ?");
-        $offset = ($pageNumber-1) * $pageNumber;
-        $query->bind_param('ii', $postPerPage, $offset);
-        $query->execute();
-        $result = $query->get_result();
-        $postsArray = array();
-        while($row = $result->fetch_assoc()){
-            $post =  new Post($row['title'],
-            $row['filename'],
-            $row['timestamp']);
-            array_push($postsArray, $post);
+    public function getTimestamp() : string {
+        return $this->timestamp;
+    }
+    public function getAuthorName() : string {
+        return $this->authorName;
+    }
+    public function getId() : string {
+        return $this->id;
+    }
 
+    //funkcja zwraca ostatnio dodany obrazek
+    static function getLast() : Post {
+        //odwołuję się do bazy danych
+        global $db;
+        //Przygotuj kwerendę do bazy danych
+        $query = $db->prepare("SELECT * FROM post ORDER BY timestamp DESC LIMIT 1");
+        //wykonaj kwerendę
+        $query->execute();
+        //pobierz wynik
+        $result = $query->get_result();
+        //przetwarzanie na tablicę asocjacyjną - bez pętli bo będzie tylko jeden
+        $row = $result->fetch_assoc();
+        //tworzenie obiektu
+        $p = new Post($row['id'], $row['filename'], $row['timestamp'], $row['title'], $row['userId']);
+        //zwracanie obiektu
+        return $p; 
+    }
+
+    //funkcja zwraca jedna stronę obrazków
+    static function getPage(int $pageNumber = 1, int $postsPerPage = 10) : array {
+        //połączenie z bazą
+        global $db;
+        //kwerenda
+        $query = $db->prepare("SELECT * FROM post WHERE removed = false ORDER BY timestamp DESC LIMIT ? OFFSET ?");
+        //oblicz przesunięcie - numer strony * ilość zdjęć na stronie
+        $offset = ($pageNumber-1)*$postsPerPage;
+        //podstaw do kwerendy
+        $query->bind_param('ii', $postsPerPage, $offset);
+        //wywołaj kwerendę
+        $query->execute();
+        //odbierz wyniki
+        $result = $query->get_result();
+        //stwórz tablicę na obiekty
+        $postsArray = array();
+        //pobieraj wiersz po wierszu jako tablicę asocjacyjną indeksowaną nazwami kolumn z mysql
+        while($row = $result->fetch_assoc()) {
+            $post = new Post($row['id'],$row['filename'],$row['timestamp'], $row['title'], $row['userId']);
+            array_push($postsArray, $post);
         }
         return $postsArray;
     }
 
-    static function upload(string $tempFileName, string $title = ""){
-        $uploadDir = "img/";
-        $imageInfo = getimagesize($tempFileName);
-        if (!is_array($imageInfo)) {
-            die("BŁĄD: Nieprawidłowy format obrazu");
+    static function upload(string $tempFileName, string $title, int $userId) {
+        //deklarujemy folder do którego będą zaczytywane obrazy
+        $targetDir = "img/";
+        //sprawdź czy mamy do czynienia z obrazem
+        $imgInfo = getimagesize($tempFileName);
+        //jeżeli $imgInfo nie jest tablicą to nie jest to obraz
+        if(!is_array($imgInfo)) {
+            die("BŁĄD: Przekazany plik nie jest obrazem!");
         }
-        $randomSeed = rand(10000,99999) .hrtime(true);
-        $hash= hash("sha256", $randomSeed);
-        $targetFileName = $uploadDir . $hash . "webp";
-        if(file_exists($targetFileName)){
-            die("błąd: Podany plik już istnieje!");
+        //generujemy losową liczbę w formie
+        //5 losowych cyfr + znacznik czasu z dokładnością do ms
+        $randomNumber = rand(10000, 99999) . hrtime(true);
+        //wygeneruj hash - nową nazwę pliku
+        $hash = hash("sha256", $randomNumber);
+        //tworzymy docelowy url pliku graficznego na serwerze
+        $newFileName = $targetDir . $hash . ".webp";
+        //sprawdź czy plik przypadkiem już nie istnieje
+        if(file_exists($newFileName)) {
+            die("BŁĄD: Podany plik już istnieje!");
         }
+        //zaczytujemy cały obraz z folderu tymczasowego do stringa
         $imageString = file_get_contents($tempFileName);
+        //generujemy obraz jako obiekt klasy GDImage
+        //@ przed nazwa funkcji powoduje zignorowanie ostrzeżeń
         $gdImage = @imagecreatefromstring($imageString);
-        imagewebp($gdImage, $targetFileName);
-        
+        //zapisujemy w formacie webp
+        imagewebp($gdImage, $newFileName);
 
+        //użyj globalnego połączenia
         global $db;
-
-        $query = $db->prepare("INSERT INTO post VALUES(NULL, ?, ?, ?)");
+        //stwórz kwerendę
+        $query = $db->prepare("INSERT INTO post VALUES(NULL, ?, ?, ?, ?, false)");
+        //przygotuj znacznik czasu dla bazy danych
         $dbTimestamp = date("Y-m-d H:i:s");
-        $query->bind_param("sss", $dbTimestamp, $targetFileName, $title);
-        if (!$query->execute())
-        die("błąd zapisu do bazy danych");
-    }
-        static function getLast() : Post {
-            //odwołuję się do bazy danych
-            global $db;
-            //Przygotuj kwerendę do bazy danych
-            $query = $db->prepare("SELECT * FROM post ORDER BY timestamp DESC LIMIT 1");
-            //wykonaj kwerendę
-            $query->execute();
-            //pobierz wynik
-            $result = $query->get_result();
-            //przetwarzanie na tablicę asocjacyjną - bez pętli bo będzie tylko jeden
-            $row = $result->fetch_assoc();
-            //tworzenie obiektu
-            $p = new Post($row['id'], $row['filename'], $row['timestamp']);
-            //zwracanie obiektu
-            return $p; 
-        }
+        //zapisz dane do bazy
+        $query->bind_param("sssi", $dbTimestamp, $newFileName, $title, $userId);
+        if(!$query->execute())
+            die("Błąd zapisu do bazy danych");
 
- 
- 
- 
-    
+    }
+    public static function remove(int $id) : bool {
+        global $db;
+        $query = $db->prepare("UPDATE post SET removed = true WHERE id = ?");
+        $query->bind_param('i', $id);
+        if($query->execute())
+            return true;
+        else
+            return false;
+    }
+
+
+public function getLikes() {
+    $likes = Likes::getLikes($this->getId());
+    return $likes;
 }
+}
+?>
