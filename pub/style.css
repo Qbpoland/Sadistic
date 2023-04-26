@@ -90,14 +90,14 @@
     border: none;
     font-size: 24px;
     cursor: pointer;
-<<<<<<< HEAD
+
 }
 
 .votecounter {
     font-size: 18px;
     margin: 0 10px;
 }
-<<<<<<< HEAD
+
 
 .upvote:hover,
 .downvote:hover {
@@ -157,14 +157,11 @@
   body {
     font-family: 'Open Sans', sans-serif;
   }
-=======
+
 img.thumbnail {
     max-width: 300px;
 }
 
->>>>>>> a0c729e (votes and working site)
-=======
-}
 
 .votecounter {
     font-size: 18px;
@@ -230,4 +227,3 @@ img.thumbnail {
     font-family: 'Open Sans', sans-serif;
   }
   
->>>>>>> c5eadd0 (fb-style css)
