@@ -40,7 +40,7 @@ Route::add('/upload', function() {
         Post::upload($_FILES['uploadedFile']['tmp_name'], $_POST['title'], $_POST['userId']);
     }
     //TODO: zmienić na ścieżkę względną
-    header("Location: http://localhost/cms/pub");
+    header("Location: http://localhost/sadistic/pub");
 }, 'post');
 
 Route::add('/register', function() {
@@ -53,7 +53,7 @@ Route::add('/register', function(){
     global $twig;
     if(isset($_POST['submit'])) {
         User::register($_POST['email'], $_POST['password']);
-        header("Location: http://localhost/cms/pub");
+        header("Location: http://localhost/sadistic/pub");
     }
 }, 'post');
 
@@ -68,7 +68,7 @@ Route::add('/login', function() {
     if(isset($_POST['submit'])) {
         if(User::login($_POST['email'], $_POST['password'])) {
             //jeśli zalogowano poprawnie to wyświetl główną stronę
-            header("Location: http://localhost/cms/pub");
+            header("Location: http://localhost/sadistic/pub");
         } else {
             //jeśli nie zalogowano poprawnie wyświetl ponownie stronę logowania z komunikatem
             $twigData = array("pageTitle" => "Zaloguj użytkownika",
@@ -97,7 +97,7 @@ Route::add('/like/([0-9]*)', function($post_id) {
     }
     $user_id = $_SESSION['user']->getId();
     $like = new Likes($post_id, $user_id, 1);
-    header("Location: /cms/pub");
+    header("Location: /sadistic/pub");
 });
 
 Route::add('/dislike/([0-9]*)', function($post_id) {
@@ -106,14 +106,14 @@ Route::add('/dislike/([0-9]*)', function($post_id) {
     }
     $user_id = $_SESSION['user']->getId();
     $like = new Likes($post_id, $user_id, -1);
-    header("Location: /cms/pub");
+    header("Location: /sadistic/pub");
 });
 
 
 
 
 
-Route::run('/cms/pub');
+Route::run('/sadistic/pub');
 
 
 ?>
